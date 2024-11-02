@@ -37,7 +37,6 @@ import {
 import { ConfigurationContext } from "src/hooks/Config";
 import { PerformerScrapeDialog } from "./PerformerScrapeDialog";
 import PerformerScrapeModal from "./PerformerScrapeModal";
-import PerformerStashBoxModal, { IStashBox } from "./PerformerStashBoxModal";
 import cx from "classnames";
 import { faPlus, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import isEqual from "lodash-es/isEqual";
@@ -630,18 +629,11 @@ export const PerformerEditPanel: React.FC<IPerformerDetails> = ({
   const renderScrapeModal = () => {
     if (!isScraperModalOpen) return;
 
-    return scraper !== undefined && isScraper(scraper) ? (
+    return scraper !== undefined ? (
       <PerformerScrapeModal
         scraper={scraper}
         onHide={() => setScraper(undefined)}
         onSelectPerformer={onScrapePerformer}
-        name={formik.values.name || ""}
-      />
-    ) : scraper !== undefined && !isScraper(scraper) ? (
-      <PerformerStashBoxModal
-        instance={scraper}
-        onHide={() => setScraper(undefined)}
-        onSelectPerformer={onScrapeStashBox}
         name={formik.values.name || ""}
       />
     ) : undefined;

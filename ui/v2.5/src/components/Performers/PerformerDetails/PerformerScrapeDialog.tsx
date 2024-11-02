@@ -24,7 +24,6 @@ import {
   circumcisedToString,
   stringToCircumcised,
 } from "src/utils/circumcised";
-import { IStashBox } from "./PerformerStashBoxModal";
 import { ScrapeResult } from "src/components/Shared/ScrapeDialog/scrapeResult";
 
 function renderScrapedGender(
@@ -177,7 +176,7 @@ function renderScrapedCircumcisedRow(
 interface IPerformerScrapeDialogProps {
   performer: Partial<GQL.PerformerUpdateInput>;
   scraped: GQL.ScrapedPerformer;
-  scraper?: GQL.Scraper | IStashBox;
+  scraper?: GQL.Scraper;
 
   onClose: (scrapedPerformer?: GQL.ScrapedPerformer) => void;
 }
@@ -187,14 +186,8 @@ export const PerformerScrapeDialog: React.FC<IPerformerScrapeDialogProps> = (
 ) => {
   const intl = useIntl();
 
-  const endpoint = (props.scraper as IStashBox)?.endpoint ?? undefined;
-
   function getCurrentRemoteSiteID() {
-    if (!endpoint) {
-      return;
-    }
-
-    return props.performer.stash_ids?.find((s) => s.endpoint === endpoint)
+    return props.performer.stash_ids?.find((s) => s.endpoint === props.scraper?.endpoint)
       ?.stash_id;
   }
 
